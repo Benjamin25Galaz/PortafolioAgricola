@@ -1,0 +1,302 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="/TestDjango/core/static/core/js/script.js"></script>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}"> <!-- Enlace al archivo CSS -->
+
+    <style>
+
+      
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- Contenedor para el texto educativo y los botones -->
+    <div class="d-flex justify-content-between align-items-center my-3" style="padding: 0 20px;">
+      <!-- Texto educativo sobre el medio ambiente (lado izquierdo) -->
+      <p class="text-education" style="font-size: 25px; font-weight: 600; margin-right: 20px;">
+        “Pequeñas acciones diarias pueden hacer una gran diferencia para el planeta.”
+      </p>
+      
+      <!-- Contenedor de los botones (lado derecho) -->
+      <div class="d-flex">
+        <!-- Botón Iniciar Sesión -->
+        <button class="btn btn-custom me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+          Iniciar Sesión
+        </button>
+        
+        <!-- Botón Registrarse -->
+        <a class="btn-custom" href="{% url 'register' %}">Registrarse</a>
+        
+      </div>
+    </div>
+    
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">INICIO DE SESION</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Nunca comparta sus datos con nadie.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Soy humano</label>
+          </div>
+          <a class="btn-custom" href="{% url 'register' %}">Iniciar</a>
+        </form>
+      </div>
+    </div>
+
+    
+
+    <!-- Nav Bar -->
+    <nav class="navbar">
+      <div class="container">
+          <a href="{% url 'home' %}" class="navbar-brand">EcoAgrícola</a>
+          <ul class="navbar-nav">
+              <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Inicio</a></li>
+              <li class="nav-item"><a href="{% url 'catalogo' %}" class="nav-link">Tienda</a></li>
+              <li class="nav-item"><a href="#nosotros" class="nav-link">Nosotros</a></li>
+              <li class="nav-item"><a href="{% url 'donacion' %}" class="nav-link">Donar</a></li>
+              <li class="nav-item"><a href="{% url 'solicitudes' %}" class="nav-link">Solicitar</a></li>
+              <li class="nav-item"><a href="{% url 'foro' %}" class="nav-link">Foro</a></li>
+              <li class="nav-item"><a href="#footer" class="nav-link">Ayuda</a></li>
+          </ul>
+      </div>
+    </nav>
+
+    <!-- Carrusel -->  
+    {% load static %} <!-- Cargar archivos estáticos -->
+
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="10000">
+          <img src="{% static 'core/img/planta.jpg' %}" alt="Los Angeles" style="width: 100%; height: 650px;">
+          <div class="carousel-caption d-none d-md-block">
+            <h5 class="title-carrusel">Productos Ecológicos, </h5>
+            <p class="text-white">Directo a Tu Mesa Ofrecemos productos frescos y 100% orgánicos, cultivados sin pesticidas ni productos químicos dañinos. Disfruta de alimentos saludables que benefician tanto a tu bienestar como al medio ambiente.</p>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+          <img src="{% static 'core/img/semillas.jpg' %}" alt="Los Angeles" style="width: 100%; height: 650px;">
+          <div class="carousel-caption d-none d-md-block">
+            <h5 class="title-carrusel">Protegemos los Recursos Naturales</h5>
+            <p class="text-white">En ECOAGRÍCOLA, cuidamos del agua y del suelo con técnicas de cultivo regenerativo, asegurando la preservación de los ecosistemas. Con cada compra, estás ayudando a conservar los recursos para futuras generaciones.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'core/img/manos.jpg' %}" alt="Los Angeles" style="width: 100%; height: 650px;">
+          <div class="carousel-caption d-none d-md-block">
+            <h5 class="title-carrusel">Cultivamos con Cuidado para el Futuro</h5>
+            <p class="text-white">En ECOAGRÍCOLA, nuestra misión es fomentar una agricultura sostenible, utilizando prácticas que respetan la biodiversidad y reducen el impacto ambiental. ¡Únete a nosotros en la creación de un planeta más verde!</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    
+
+    <!-- Sección de Compra de Productos Agrícolas -->    
+    <section id="productos" class=" py-5">
+      <div class="col-12">
+        <h2 class="section-title text-center">Tienda de Productos Agrícolas</h2>
+        <div class="row">
+          <!-- Producto 1 -->
+          <div class="col-md-4 text-center producto">
+            <img src="{% static 'core/img/herramientas.jpg' %}" alt="Herramienta Agrícola" class="img-fluid">
+            <br>
+            <br>
+            <h5 class="sub-title">Herramientas Agrícolas</h5>
+            <p class="">Aqui encontraras todo tipo de herramientas para el trabajo agrícola.</p>
+            <a class="btn-custom" href="{% url 'catalogo' %}" role="button">Ir de compras</a>   <!-- Si prefieres mantener el estilo del botón: -->
+          </div>
+          <!-- Producto 2 -->
+          <div class="col-md-4 text-center producto">
+            <img src="{% static 'core/img/semillasvarias.jpg' %}" alt="Semillas" class="img-fluid">
+            <br>
+            <br>
+            <h5 class="sub-title">Semillas de Calidad</h5>
+            <p>Semillas certificadas y orgánicas para tus cultivos. Desde hortalizas hasta árboles.</p>
+            <a class="btn-custom" href="{% url 'catalogo' %}" role="button">Ir de compras</a>   <!-- Si prefieres mantener el estilo del botón: -->
+          </div>
+          <!-- Producto 3 -->
+          <div class="col-md-4 text-center producto">
+            <img src="{% static 'core/img/tierra.jpg' %}" alt="Tierra de Hoja" class="img-fluid">
+            <br>
+            <br>
+            <h5 class="sub-title">Tierra de Hoja</h5>
+            <p>Enriquece tu suelo con tierra de hoja de alta calidad para mejorar el rendimiento de tus cultivos.</p>
+            <a class="btn-custom" href="{% url 'catalogo' %}" role="button">Ir de compras</a>   <!-- Si prefieres mantener el estilo del botón: -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+   
+
+    
+    <!-- Sección de Nosotros -->
+    <section id="nosotros" class="py-5">
+      <div class="container">
+        <div class="text-center">
+          <h2 class="section-title">Nosotros</h2>
+          <div class="row justify-content-center">
+            
+            <!-- Misión -->
+            <div class="col-md-4 mb-4">
+              <div class="card shadow-lg p-4  rounded card-custom">
+                <div class="card-img-wrapper">
+                  <img src="{% static 'core/img/mision.jpg' %}" alt="Misión" class="img-fluid card-img">
+                </div>
+                <h4 class="text-highlight mt-3">Misión</h4>
+                <p>Con tu apoyo, buscamos plantar árboles y restaurar ecosistemas naturales. Cada donación ayuda a construir un futuro verde y sostenible.</p>
+              </div>
+            </div>
+            
+            <!-- Visión -->
+            <div class="col-md-4 mb-4">
+              <div class="card shadow-lg p-4  rounded card-custom">
+                <div class="card-img-wrapper">
+                  <img src="{% static 'core/img/vision.jpg' %}" alt="Visión" class="img-fluid card-img">
+                </div>
+                <h4 class="text-highlight mt-3">Visión</h4>
+                <p>Queremos ser líderes en la restauración ambiental y la promoción de prácticas agrícolas sostenibles, beneficiando a nuestras comunidades y al planeta.</p>
+              </div>
+            </div>
+            
+            <!-- Valores -->
+            <div class="col-md-4 mb-4">
+              <div class="card shadow-lg p-4  rounded card-custom">
+                <div class="card-img-wrapper">
+                  <img src="{% static 'core/img/valores.jpg' %}" alt="Valores" class="img-fluid card-img">
+                </div>
+                <h4 class="text-highlight mt-3">Valores</h4>
+                <p>Nos basamos en el compromiso con la sostenibilidad, la responsabilidad ambiental y el respeto por la naturaleza en todas nuestras iniciativas.</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+    
+
+
+    <!-- Sección de Solicitudes de Retiro -->
+    <!-- Sección de Solicitudes de Retiro -->
+    <!-- Sección de Solicitudes de Retiro -->
+    <!-- Sección de Solicitudes de Retiro -->
+    
+    <section id="solicitudes-retiro" class="py-5 solicitudes-retiro-section">
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          
+          <!-- Imagen importante a la izquierda -->
+          <div class="col-lg-3 col-md-4 mb-4 mb-md-0 text-center">
+            <div class="important-image">
+              <img src="{% static 'core/img/sacaraiz.jpg' %}" alt="Gestión de árboles" class="img-fluid rounded">
+            </div>
+            <h3 style="color: #66CDAA; margin-top: 10px;">Árboles</h3>
+          </div>
+          
+          <!-- Contenido central -->
+          <div class="col-lg-6 col-md-8 text-center">
+            <h2 class="section-title">SOLICITUDES DE RETIRO</h2>
+            <p class="text-education">Contribuye al reciclaje y ayuda al planeta</p>
+            <a class="btn-custom" href="" role="button">Ir al sitio</a>  
+          </div>
+          
+          <!-- Imagen importante a la derecha -->
+          <div class="col-lg-3 col-md-4 mb-4 mb-md-0 text-center">
+            <div class="important-image">
+              <img src="{% static 'core/img/servicios.jpg' %}" alt="Servicios de Reciclaje" class="img-fluid rounded">
+            </div>
+            <h3 style="color: #66CDAA; margin-top: 10px;">Aguas de Piscinas</h3>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+    
+    
+    
+
+
+
+
+
+    
+
+    <!-- Sección Foro de Ideas -->
+    <!-- Sección Foro de Ideas -->
+    <section id="foro" class="py-5 foro-section">
+      <div class="text-center">
+        <h2 class="section-title">Foro de Ideas</h2>
+        <div class="content-wrapper">
+          <img src="{% static 'core/img/comunidad.jpg' %}" alt="Foro de Ideas" class="img-fluid foro-image">
+          <div class="overlay-content">
+            <p class="foro-p">Comparte tus ideas y proyectos para mejorar el medio ambiente. ¡Juntos podemos hacer más!</p>
+            <button class="btn btn-custom" href="#foro">Ir al Foro</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+      
+    <!-- Pie de Página -->
+    <footer id="footer" class="bg-dark text-white text-center py-3">
+      <div class="container">
+        <p>&copy; 2024 ECOAGRÍCOLA. Todos los derechos reservados.</p>
+        <p>
+          <a href="#" class="mx-2">Política de Privacidad</a>
+          <a href="#" class="mx-2">Términos y Condiciones</a>
+        </p>
+      </div>
+    </footer>
+
+
+
+    
+    <script src="{% static 'core/js/script.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  </body>
+</html>

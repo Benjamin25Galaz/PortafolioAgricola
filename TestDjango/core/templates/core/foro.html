@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"></html>
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EcoAgricola</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}"> <!-- Enlace al archivo CSS -->
+    
+
+
+  </head>
+
+  <body>
+
+    <!-- Contenedor para el texto educativo y los botones -->
+    <div class="d-flex justify-content-between align-items-center my-3" style="padding: 0 20px;">
+      <!-- Texto educativo sobre el medio ambiente (lado izquierdo) -->
+      <p class="text-education" style="font-size: 25px; font-weight: 600; margin-right: 20px;">
+        “Pequeñas acciones diarias pueden hacer una gran diferencia para el planeta.”
+      </p>
+      
+      <!-- Contenedor de los botones (lado derecho) -->
+      <div class="d-flex">
+        <!-- Botón Iniciar Sesión -->
+        <button class="btn btn-custom me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+          Iniciar Sesión
+        </button>
+        
+        <!-- Botón Registrarse -->
+        <button class="btn btn-custom" type="button">
+          Registrarse
+        </button>
+      </div>
+    </div>
+    
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">INICIO DE SESION</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Nunca comparta sus datos con nadie.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Soy humano</label>
+          </div>
+          <button type="submit" class="btn btn-success">Iniciar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Nav Bar -->
+    <nav class="navbar">
+      <div class="container">
+          <a href="{% url 'home' %}" class="navbar-brand">EcoAgrícola</a>
+          <ul class="navbar-nav">
+            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Inicio</a></li>
+            <li class="nav-item"><a href="{% url 'catalogo' %}" class="nav-link">Tienda</a></li>
+            <li class="nav-item"><a href="#nosotros" class="nav-link">Nosotros</a></li>
+            <li class="nav-item"><a href="{% url 'donacion' %}" class="nav-link">Donar</a></li>
+            <li class="nav-item"><a href="{% url 'solicitudes' %}" class="nav-link">Solicitar</a></li>
+            <li class="nav-item"><a href="{% url 'foro' %}" class="nav-link">Foro</a></li>
+            <li class="nav-item"><a href="#footer" class="nav-link">Ayuda</a></li>
+          </ul>
+      </div>
+    </nav>
+
+
+    <br>
+    <h1 class="section-title text-center">Temas de discusión</h1>
+<div class="container mt-4">
+    <div class="row">
+        {% for tema in temas %}
+        <div class="col-md-4 mb-3">
+            <div class="card border rounded">
+                <div class="card-body">
+                    <h5 class="card-title">
+                      <a href="{% url 'tema_detail' tema.id %}" class="text-decoration-none"></a>
+                            {{ tema.titulo }}
+                        </a>
+                    </h5>
+                    <p class="card-text">{{ tema.content }}</p>
+                    <small class="text-muted">por {{ tema.author}} - {{ tema.fecha_creacion }}</small>
+                    
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="text-center mt-4">
+    <a class="btn btn-primary" href="{% url 'crear_tema' %}" role="button">Crear discusión</a>
+</div>
+
+ 
+    
+
+
+
+
+
+    <!--
+    <h1>Foro de Discusión</h1>
+
+     Comprobar si hay temas 
+    {% if temas %}
+    <ul>
+         Iterar sobre los temas 
+        {% for tema in temas %}
+            <li>
+                <h2>{{ tema.titulo }}</h2>
+                <p>{{ tema.descripcion }}</p>
+                <small>Creado por: {{ tema.autor }} el {{ tema.fecha_creacion }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No hay temas aún. Sé el primero en crear uno!</p>
+    {% endif %}
+    -->
+
+    <br>
+
+    <!-- Pie de Página -->
+    <footer class="bg-dark text-white text-center py-3">
+      <div class="container">
+        <p>&copy; 2024 ECOAGRÍCOLA. Todos los derechos reservados.</p>
+        <p>
+          <a href="#" class="mx-2">Política de Privacidad</a>
+          <a href="#" class="mx-2">Términos y Condiciones</a>
+        </p>
+      </div>
+    </footer>
+    
+  </body>
+</html>  
