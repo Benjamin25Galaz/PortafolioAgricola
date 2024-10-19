@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tema, Solicitud, Register #, Donacion
+from .models import Tema, Solicitud, Register, Donacion
 
 
 
@@ -19,6 +19,14 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError("Las contraseñas no coinciden")
 
         return confirmar_contrasena
+
+class DonacionForm(forms.ModelForm):
+    
+    
+    class Meta:
+        model = Donacion
+        fields = ['opcion', 'comuna', 'tipo_arbol', 'cantidad']
+
 
 
 class TemaForm(forms.ModelForm):

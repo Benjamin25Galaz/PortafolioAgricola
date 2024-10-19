@@ -128,12 +128,11 @@
        
             <div class="resumen-container">
                 <h1>Resumen de tu donación</h1>
-                <p><strong>Opción:</strong> {{ donacion.opcion }}</p>
-                <p><strong>Comuna:</strong> {{ donacion.comuna }}</p>
-                <p><strong>Tipo de Árbol:</strong> {{ donacion.tipo_arbol }}</p>
-                <p><strong>Cantidad:</strong> {{ donacion.cantidad }}</p>
-                <p><strong>Valor Total:</strong> {{ donacion.valor_total }}</p>
-                
+                <p><strong>Opción:</strong>{{donaciones.opcion}}</p>
+                <p><strong>Comuna:</strong>{{donaciones.comuna}}</p>
+                <p><strong>Tipo de Árbol:</strong>{{donaciones.tipo_arbol}}</p>
+                <p><strong>Cantidad:</strong>{{donaciones.cantidad}}</p>
+                <p><strong>Valor Total:</strong>{{donaciones.valor_total }}</p>
                 <form action="{% url 'pago' %}" method="post">
                     {% csrf_token %}
                     <button type="submit">Ir a Pagar</button>

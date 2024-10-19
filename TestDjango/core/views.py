@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-from .forms import TemaForm, SolicitudForm, RegisterForm#, DonacionForm
-from .models import Tema, Solicitud, Register#, Donacion
+from .forms import TemaForm, SolicitudForm, RegisterForm, DonacionForm
+from .models import Tema, Solicitud, Register, Donacion
 from django.utils import timezone
 
 
@@ -14,22 +14,23 @@ def home(request):
 def donacion(request):
     return render(request, 'core/donacion.html')
 
-'''def donacion(request):
+def donacion(request):
     if request.method == 'POST':
         form = DonacionForm(request.POST)
         if form.is_valid():
-            # Guardar los datos en la tabla Donacion
-            nueva_donacion = form.save(commit=False)
-            nueva_donacion.valor_total = form.cleaned_data['cantidad'] * 5000
-            nueva_donacion.save()
-
-            # Redirigir a la página de resumen
-            return render(request, 'resumen.html', {'donacion': nueva_donacion})
+            form.save()
+            return redirect('resumen')  # Redirige a la página de resumen o éxito
     else:
         form = DonacionForm()
 
     return render(request, 'core/donacion.html', {'form': form})
-'''
+
+
+
+def resumen(request):
+    donaciones= Donacion.objects.all()  # Obtenemos todas las solicitudes
+    return render(request, 'core/resumen.html', {'donaciones': donaciones})
+
 
 
 def register(request):
