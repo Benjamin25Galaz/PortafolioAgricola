@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 from django.contrib.auth import login, logout as django_logout, authenticate
 from .forms import TemaForm, SolicitudForm, RegisterForm, DonacionForm, CommentForm, ProductoForm
 from .models import Tema, Solicitud, Register, Donacion, Producto
@@ -26,6 +27,23 @@ def donacion(request):
         form = DonacionForm()
 
     return render(request, 'core/donacion.html', {'form': form})
+
+def migrar_usuarios():
+    # Obtener todos los registros de la tabla Register
+    registros = Register.objects.all()
+
+    for registro in registros:
+        # Verifica si ya existe un usuario con ese correo electrónico
+        if not User.objects.filter(username=registro.correo_electronico).exists():
+            # Crea un usuario en la tabla User
+            user = User.objects.create_user(
+                username=registro.correo_electronico,  # Utiliza el correo como nombre de usuario
+                email=registro.correo_electronico,
+                password=registro.contrasena,  # Asegúrate de que la contraseña esté almacenada de forma segura
+                first_name=registro.nombre,
+                last_name=registro.apellido
+            )
+            user.save()
 
 
 def tema_detail(request, tema_id):
@@ -63,11 +81,31 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            # Obtener los datos del formulario
+            nombre = form.cleaned_data['nombre']
+            apellido = form.cleaned_data['apellido']
+            correo = form.cleaned_data['correo_electronico']
+            contrasena = form.cleaned_data['contrasena']
+
+            # Crear el usuario en la tabla User
+            user = User.objects.create_user(
+                username=correo,  # Utiliza el correo como nombre de usuario
+                email=correo,
+                password=contrasena,
+                first_name=nombre,
+                last_name=apellido
+            )
+            user.save()
+            
+            # Opcionalmente, puedes autenticar y loguear al usuario después de registrarse
+            from django.contrib.auth import login
+            login(request, user)
+
+            return redirect('home')  # Redirige a la página principal después del registro
     else:
-        form = RegisterForm()  # Asegúrate de que esta línea cree un formulario vacío si la solicitud es GET
+        form = RegisterForm()
     return render(request, 'core/register.html', {'form': form})
+
 
 def bienvenido(request):
     return render(request, 'core/bienvenido.html')
@@ -138,21 +176,46 @@ def crear_tema(request):
 
 def acceder(request):
     if request.method == "POST":
+        correo_electronico = request.POST.get('correo_electronico')
+        contrasena = request.POST.get('contrasena')
+
+        # Autenticar al usuario usando el correo como nombre de usuario
+        usuario = authenticate(request, username=correo_electronico, password=contrasena)
+        
+        # Verificar si la autenticación fue exitosa
+        if usuario is not None:
+            login(request, usuario)
+            # Almacena el nombre en la sesión
+            request.session['nombre_usuario'] = usuario.first_name  # Cambia según el campo que desees mostrar
+            return redirect('bienvenido')
+        else:
+            error_message = "Credenciales inválidas."
+            return render(request, 'core/acceder.html', {'error': error_message})
+
+    return render(request, 'core/acceder.html')
+
+
+'''
+def acceder(request):
+    if request.method == "POST":
         # Obtener los valores de usuario y contraseña desde el formulario
         correo_electronico = request.POST.get('correo_electronico')
         contrasena = request.POST.get('contrasena')
-        # Verifica si el registro existe en la base de datos
-        try:
-            usuario = Register.objects.get(correo_electronico=correo_electronico, contrasena=contrasena)
-            # Almacena el nombre en la sesión
-            request.session['nombre_usuario'] = usuario.nombre  # Guarda el nombre del usuario en la sesión
-            return redirect('bienvenido')  # Redirigir a la página de inicio
-        except Register.DoesNotExist:
+
+        # Autenticar al usuario usando el correo como nombre de usuario
+        usuario = authenticate(request, username=correo_electronico, password=contrasena)
+        
+        # Verificar si la autenticación fue exitosa
+        if usuario is not None:
+            login(request, usuario)
+            return redirect('bienvenido')  # Redirigir a la página de inicio o donde desees
+        else:
             error_message = "Credenciales inválidas."  # Mensaje de error si el usuario no existe
             return render(request, 'core/acceder.html', {'error': error_message})
 
     # Si el método no es POST, renderiza el formulario de inicio de sesión
-    return render(request, 'core/acceder.html')  # Siempre se debe devolver un HttpResponse
+    return render(request, 'core/acceder.html')
+'''
 
 
 def listar_productos(request):
