@@ -13,6 +13,15 @@ class Tema(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.titulo
+    
+class Comment(models.Model):
+    tema = models.ForeignKey(Tema, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.author} on {self.tema}'
 
 class Donacion(models.Model):
     OPCIONES = [
@@ -84,5 +93,16 @@ class Register(models.Model):
     def str(self):
         return self.nombre
 
+
+class Producto(models.Model):
+    nombre = models.CharField(max_length=100)
+    categoria = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    imagen = models.ImageField(upload_to='productos/')
+    stock = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.nombre
 
 

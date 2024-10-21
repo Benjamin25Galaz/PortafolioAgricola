@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tema, Solicitud, Register, Donacion
+from .models import Tema, Solicitud, Register, Donacion, Comment, Producto
 
 
 
@@ -28,6 +28,14 @@ class DonacionForm(forms.ModelForm):
         fields = ['opcion', 'comuna', 'tipo_arbol', 'cantidad']
 
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 4}),
+        }
+
 
 class TemaForm(forms.ModelForm):
     class Meta:
@@ -53,7 +61,17 @@ class SolicitudForm(forms.ModelForm):
         ]
 
 
-
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = [
+            'nombre',
+            'categoria',
+            'descripcion',
+            'precio',
+            'imagen',
+            'stock'
+            ]
 
 
 
