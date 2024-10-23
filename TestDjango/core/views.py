@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout as django_logout, authenticate
-from .forms import TemaForm, SolicitudForm, RegisterForm, DonacionForm, CommentForm, ProductoForm
-from .models import Tema, Solicitud, Register, Donacion, Producto
+from .forms import TemaForm, SolicitudForm, RegisterForm, DonacionForm, CommentForm, ProductoForm, PagoForm
+from .models import Tema, Solicitud, Register, Donacion, Producto,Pago
 from .carrito import Carrito
 from django.utils import timezone
 
@@ -21,12 +22,28 @@ def donacion(request):
     if request.method == 'POST':
         form = DonacionForm(request.POST)
         if form.is_valid():
+            donacion_guardada = form.save()
+            return redirect('resumen_donacion', donacion_id=donacion_guardada.id)
+    else:
+        form = DonacionForm()
+    return render(request, 'core/donacion.html', {'form': form})
+
+def resumen_donacion(request, donacion_id):
+    donacion = Donacion.objects.get(id=donacion_id)
+    return render(request, 'core/resumen_donacion.html', {'donacion': donacion})
+
+''''
+def donacion(request):
+    if request.method == 'POST':
+        form = DonacionForm(request.POST)
+        if form.is_valid():
             form.save()
             return redirect('resumen')  # Redirige a la página de resumen o éxito
     else:
         form = DonacionForm()
 
     return render(request, 'core/donacion.html', {'form': form})
+'''
 
 def migrar_usuarios():
     # Obtener todos los registros de la tabla Register
@@ -57,7 +74,7 @@ def tema_detail(request, tema_id):
             comment.tema = tema
             comment.author = request.user
             comment.save()
-            return redirect('core/tema_detail', tema_id=tema.id)
+            return redirect('tema_detail', tema_id=tema.id)
     else:
         form = CommentForm()
 
@@ -66,10 +83,19 @@ def tema_detail(request, tema_id):
         'comments': comments,
         'form': form,
     })
+def donacion(request):
+    if request.method == 'POST':
+        form = DonacionForm(request.POST)
+        if form.is_valid():
+            donacion_guardada = form.save()
+            return redirect('resumen_donacion', donacion_id=donacion_guardada.id)
+    else:
+        form = DonacionForm()
+    return render(request, 'core/donacion.html', {'form': form})
 
-def resumen(request):
-    donaciones= Donacion.objects.all()  # Obtenemos todas las solicitudes
-    return render(request, 'core/resumen.html', {'donaciones': donaciones})
+def resumen_donacion(request, donacion_id):
+    donacion = Donacion.objects.get(id=donacion_id)
+    return render(request, 'core/resumen_donacion.html', {'donacion': donacion})
 
 
 
@@ -144,6 +170,21 @@ def catalogo(request):
 def pago(request):
     return render(request, 'core/pago.html')
 
+def pago(request):
+    if request.method == 'POST':
+        form = PagoForm(request.POST)
+        if form.is_valid():
+            pago = Pago(usuario=request.user, cantidad=form.cleaned_data['cantidad'])
+            pago.save()
+            messages.success(request, 'El pago ha sido procesado con éxito.')
+            return redirect('pago_exitoso')
+    else:
+        form = PagoForm()
+
+    return render(request, 'core/pago.html', {'form': form})
+
+def pago_exitoso(request):
+    return render(request, 'core/pago_exitoso.html')
 
 def detallepro(request):
     return render(request, 'core/detallepro.html')
@@ -194,28 +235,6 @@ def acceder(request):
 
     return render(request, 'core/acceder.html')
 
-
-'''
-def acceder(request):
-    if request.method == "POST":
-        # Obtener los valores de usuario y contraseña desde el formulario
-        correo_electronico = request.POST.get('correo_electronico')
-        contrasena = request.POST.get('contrasena')
-
-        # Autenticar al usuario usando el correo como nombre de usuario
-        usuario = authenticate(request, username=correo_electronico, password=contrasena)
-        
-        # Verificar si la autenticación fue exitosa
-        if usuario is not None:
-            login(request, usuario)
-            return redirect('bienvenido')  # Redirigir a la página de inicio o donde desees
-        else:
-            error_message = "Credenciales inválidas."  # Mensaje de error si el usuario no existe
-            return render(request, 'core/acceder.html', {'error': error_message})
-
-    # Si el método no es POST, renderiza el formulario de inicio de sesión
-    return render(request, 'core/acceder.html')
-'''
 
 
 def listar_productos(request):

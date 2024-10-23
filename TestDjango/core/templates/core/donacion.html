@@ -46,20 +46,16 @@
       </button>
     </div>
     
-
-
-
     <div class="donar-container">
       <h1 class="section-title text-center">¿De qué forma quieres aportar?</h1>
-
-      <form method="post" >
+  
+      <form method="post">
           {% csrf_token %}
-          {{ form.as_p }} <!-- Se renderiza el formulario de Django aquí -->
+          {{ form.as_p }} <!-- Renderiza el formulario de Django aquí -->
           <button type="submit" class="btn-custom">Continuar</button>
-          <a class="btn-custom" href="{% url 'resumen' %}">ir al Resumen</a>
       </form>
-      
     </div>
+
 
 
 

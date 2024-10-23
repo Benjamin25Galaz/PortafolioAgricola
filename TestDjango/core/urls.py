@@ -1,19 +1,21 @@
 from django.urls import path
-from .views import home, donacion,acceder,bienvenido , logout, solicitudes, resumen, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo, detallepro,listar_productos,  pago, lista_solicitudes,tema_detail
+from .views import home, donacion,acceder,bienvenido, resumen,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo, detallepro,listar_productos,  pago, lista_solicitudes,tema_detail
 
 urlpatterns = [
     path('', home,name="home"),
     path('donacion/', donacion,name='donacion'),
     path('solicitudes/', solicitudes,name='solicitudes'),
+    path('foro/', foro,name='foro'),
+    path('resumen/<int:donacion_id>/', resumen_donacion, name='resumen_donacion'),
     path('resumen/', resumen,name='resumen'),
     path('resumen/<int:donacion_id>/', resumen, name='resumen'),
-    path('foro/', foro,name='foro'),
     path('bienvenido/', bienvenido, name='bienvenido'),
     path('crear_tema/', crear_tema,name='crear_tema'),
     path('register/', register,name='register'),
     path('catalogo/', catalogo,name='catalogo'),
     path('detallepro/', detallepro,name='detallepro'),
     path('pago/', pago,name='pago'),
+        path('pago_exitoso/', pago_exitoso, name='pago_exitoso'),
     path('lista_solicitudes/', lista_solicitudes,name='lista_solicitudes'),
     path('foro/<int:tema_id>/', tema_detail, name='tema_detail'),
     path('acceder/', acceder,name='acceder'),

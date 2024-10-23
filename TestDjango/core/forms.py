@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tema, Solicitud, Register, Donacion, Comment, Producto
+from .models import Tema, Solicitud, Register, Donacion, Comment, Producto, Pago
 
 
 
@@ -36,6 +36,10 @@ class CommentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'rows': 4}),
         }
 
+class PagoForm(forms.ModelForm):
+    class Meta:
+        model = Pago
+        fields = ['nombre', 'apellido', 'correo', 'telefono']
 
 class TemaForm(forms.ModelForm):
     class Meta:

@@ -53,39 +53,24 @@
 
 
 
-        <br>
+      <br>
         
-        <div class="donar-container">
-            <h1>Pago de tu Donación</h1>
+      <div class="donar-container">
+        <h2>Procesar Pago</h2>
+        <form method="POST" action="{% url 'pago_exitoso' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Ir a Pagar</button>
+        </form>
+        <a href="{% url 'home' %}">Cancelar</a>
+      </div>
+  
+
+        
+        
+      
     
-            <p><strong>Total a pagar:</strong> ${{ total }} CLP</p>
-    
-            <form action="" method="POST">
-                {% csrf_token %}
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-    
-                <label for="apellido">Apellido:</label>
-                <input type="text" id="apellido" name="apellido" required>
-    
-                <label for="correo">Correo Electrónico:</label>
-                <input type="email" id="correo" name="correo" required>
-    
-                <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required>
-    
-                <label for="metodo-pago">Medio de Pago:</label>
-                <select id="metodo-pago" name="metodo-pago" required>
-                    <option value="tarjeta">Tarjeta de Crédito/Débito</option>
-                    <option value="transferencia">Transferencia Bancaria</option>
-                    <option value="paypal">PayPal</option>
-                </select>
-    
-                <input type="submit" value="Pagar">
-            </form>
-        </div>
-    
-        <br>
+      <br>
 
   </body>
 </html>

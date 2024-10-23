@@ -22,7 +22,50 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.author} on {self.tema}'
+    
+class Donacion(models.Model):
+    OPCIONES = [
+        ('Planta un Árbol', 'Planta un Árbol'),
+        ('Herramientas', 'Herramientas'),
+        ('Desechos', 'Desechos'),
+    ]
+    
+    TIPOS_ARBOL = [
+        ('Roble', 'Roble'),
+        ('Árbol de Neem', 'Árbol de Neem'),
+        ('Cedro', 'Cedro'),
+    ]
 
+    PRECIO_ARBOL = {
+        'Roble': 5000,
+        'Árbol de Neem': 8000,
+        'Cedro': 12000,
+    }
+
+    opcion = models.CharField(max_length=100, choices=OPCIONES)
+    comuna = models.CharField(max_length=100, null=True)
+    tipo_arbol = models.CharField(max_length=100, choices=TIPOS_ARBOL)
+    cantidad = models.IntegerField(blank=True, null=True)
+    valor_total = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        managed = True
+        db_table = 'donacion'
+        constraints = [
+            models.UniqueConstraint(fields=['opcion', 'comuna', 'tipo_arbol', 'cantidad'], name='unique_donation')
+        ]
+
+    def save(self, *args, **kwargs):
+        if self.tipo_arbol in self.PRECIO_ARBOL:
+            self.valor_total = self.cantidad * self.PRECIO_ARBOL[self.tipo_arbol]
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.opcion} - {self.cantidad} semillas"
+
+
+
+'''
 class Donacion(models.Model):
     OPCIONES = [
         ('Planta un Árbol', 'Planta un Árbol'),
@@ -52,7 +95,7 @@ class Donacion(models.Model):
 
     def __str__(self):
         return f"{self.opcion} - {self.cantidad} semillas"    
-
+'''
 
 
 
@@ -105,4 +148,13 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
+class Pago(models.Model):
+    nombre = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100)
+    correo = models.EmailField()
+    telefono = models.CharField(max_length=15)
+    total = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"Pago de {self.nombre} {self.apellido} - {self.total} CLP"
 
