@@ -15,27 +15,31 @@ class Carrito:
 
 
     def agregar_carrito(self, producto):
-        id = str(producto.id)  # Corrección de 'srt' a 'str'
-        if id not in self.carrito.keys():  # Cambié .key() a .keys()
-            self.carrito[id] = {
-                "producto_id": producto.id,
-                "nombre": producto.nombre,
-                "categoria": producto.categoria,
-                "descripcion": producto.descripcion,
-                "precio": str(producto.precio),  # Asegúrate que el precio sea un número
-                "imagen": producto.imagen.url,  # Asegúrate que la imagen se maneje correctamente
-                "cantidad": 1,  # Inicializa cantidad
-            }
+        id = str(producto.id)
+        if id not in self.carrito.keys():
+            if producto.stock > 0:
+                self.carrito[id] = {
+                    "producto_id": producto.id,
+                    "nombre": producto.nombre,
+                    "categoria": producto.categoria,
+                    "descripcion": producto.descripcion,
+                    "precio": str(producto.precio),
+                    "imagen": producto.imagen.url,
+                    "cantidad": 1,
+                }
+                self.guardar_carrito()
+            else:
+                print("El producto está agotado.")
         else:
-            for key, value in self.carrito.items():
-                if key == str(producto.id):
-                    value["cantidad"] = value["cantidad"] + 1
-                    self.guardar_carrito()
-                    break
+            if producto.stock > self.carrito[id]['cantidad']:
+                self.carrito[id]['cantidad'] += 1
+                self.guardar_carrito()
+            else:
+                print("No hay suficiente stock para agregar más.")
 
-    
+    # Asegúrate de definir estos métodos correctamente en tu Carrito
     def guardar_carrito(self):
-        self.session["carrito"] = self.carrito  # Guarda el carrito en la sesión
+        self.session["carrito"] = self.carrito
         self.session.modified = True
 
 
