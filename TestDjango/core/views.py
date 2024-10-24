@@ -258,7 +258,10 @@ def restar_producto(request, producto_id):
 def mostrar_carrito(request):
     carrito = Carrito(request)
     total = carrito.obtener_total()
-    return render("listar_productos")
+    return render(request, "core/listar_productos.html", {
+        'carrito': carrito,
+        'total': total
+    })
 
 def sumar_producto(request, producto_id):
     carrito = Carrito(request)  # Crear una instancia del carrito

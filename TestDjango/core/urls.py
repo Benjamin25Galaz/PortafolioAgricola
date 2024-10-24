@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from .views import home, donacion,acceder,bienvenido, resumen,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo,listar_productos,  pago, lista_solicitudes,tema_detail
 
 urlpatterns = [
@@ -31,9 +33,10 @@ urlpatterns = [
     path('eliminar/<int:producto_id>/', eliminar_producto, name='Del'),  # Eliminar un producto del carrito
     path('restar/<int:producto_id>/', restar_producto, name='Sub'),  # Restar uno al carrito
     path('sumar/<int:producto_id>/', sumar_producto, name='Sum'),  # Restar uno al carrito
-    path('limpiar/', limpiar_carrito, name='CLS'),  # Limpiar el carrito
+    path('limpiar/', limpiar_carrito, name='CLS'), 
+     # Limpiar el carrito
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 
