@@ -64,41 +64,6 @@ class Donacion(models.Model):
         return f"{self.opcion} - {self.cantidad} semillas"
 
 
-
-'''
-class Donacion(models.Model):
-    OPCIONES = [
-        ('Planta un Árbol', 'Planta un Árbol'),
-        ('Herramientas', 'Herramientas'),
-        ('Desechos', 'Desechos'),
-    ]
-    
-    TIPOS_ARBOL = [
-        ('Roble', 'Roble'),
-        ('Árbol de Neem', 'Árbol de Neem'),
-        ('Cedro', 'Cedro'),
-    ]
-
-    opcion = models.CharField(max_length=100, choices=OPCIONES)
-    comuna = models.CharField(max_length=100, null=True)
-    tipo_arbol = models.CharField(max_length=100,choices=TIPOS_ARBOL)
-    cantidad = models.IntegerField(blank=True, null=True)#models.PositiveIntegerField(default=0)  # Número de semillas a donar
-    valor_total = models.PositiveIntegerField(default=0)  # Valor total calculado (sin necesidad de id)
-
-    class Meta:
-        managed = True  # Esto asegura que Django no intente agregar el campo 'id'
-        db_table = 'donacion'
-        # Para eliminar la creación automática de 'id':
-        constraints = [
-            models.UniqueConstraint(fields=['opcion', 'comuna', 'tipo_arbol', 'cantidad'], name='unique_donation')
-        ]
-
-    def __str__(self):
-        return f"{self.opcion} - {self.cantidad} semillas"    
-'''
-
-
-
 class Solicitud(models.Model):
     RETIRO_AGUAS = 'retiro_aguas_piscina'
     RETIRO_ARBOLES = 'retiro_arboles'

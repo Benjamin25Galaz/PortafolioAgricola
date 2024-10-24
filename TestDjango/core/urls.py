@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, donacion,acceder,bienvenido, resumen,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo, detallepro,listar_productos,  pago, lista_solicitudes,tema_detail
+from .views import home, donacion,acceder,bienvenido, resumen,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo,listar_productos,  pago, lista_solicitudes,tema_detail
 
 urlpatterns = [
     path('', home,name="home"),
@@ -13,18 +13,14 @@ urlpatterns = [
     path('crear_tema/', crear_tema,name='crear_tema'),
     path('register/', register,name='register'),
     path('catalogo/', catalogo,name='catalogo'),
-    path('detallepro/', detallepro,name='detallepro'),
     path('pago/', pago,name='pago'),
         path('pago_exitoso/', pago_exitoso, name='pago_exitoso'),
     path('lista_solicitudes/', lista_solicitudes,name='lista_solicitudes'),
     path('foro/<int:tema_id>/', tema_detail, name='tema_detail'),
     path('acceder/', acceder,name='acceder'),
     path('logout/', logout, name='logout'),
-
-     path('productos/', listar_productos, name='listar_productos'),
-
+    path('productos/', listar_productos, name='listar_productos'),
     path('producto/<int:pk>/', detalle_producto, name='detalle_producto'),
-
     path('producto/nuevo/', formulario_producto, name='formulario_producto'),
 
 
@@ -36,7 +32,6 @@ urlpatterns = [
     path('restar/<int:producto_id>/', restar_producto, name='Sub'),  # Restar uno al carrito
     path('sumar/<int:producto_id>/', sumar_producto, name='Sum'),  # Restar uno al carrito
     path('limpiar/', limpiar_carrito, name='CLS'),  # Limpiar el carrito
-    path('detallepro/', detallepro,name='detallepro'),
 
 ]
 

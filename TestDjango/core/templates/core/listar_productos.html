@@ -38,7 +38,7 @@
                             <div class="col-6 col-sm-4 mb-3"> <!-- Ajustado para mostrar 3 productos por fila -->
                                 <div class="card border rounded">
                                     <div class="card-body text-center">
-                                        <h5 class="card-title">{{ producto.nombre }}</h5>
+                                        <a href="{% url 'detalle_producto' producto.pk %}" class="card-title">{{ producto.nombre }}</a>
                                         <img 
                                             src="{{ producto.imagen.url }}" 
                                             alt="{{ producto.nombre }}" 
@@ -81,7 +81,7 @@
                       </ul>
                       <p class="mt-2">Total: 
                           <!--${{ request.session.carrito.total|floatformat:2 }} -->
-                          ${{ total_carrito }}
+                          ${{ total}}
                       </p>
                     {% else %}
                         <p>Tu carrito está vacío.</p>

@@ -62,6 +62,11 @@ class Carrito:
             else:
                 print("El Producto no existe en el carrito.")
 
+    def obtener_total(self):
+        total = 0
+        for key, value in self.carrito.items():
+            total += float(value["precio"]) * value["cantidad"]
+        return total
 
     def sumar(self, producto):
         for key, value in self.carrito.items():

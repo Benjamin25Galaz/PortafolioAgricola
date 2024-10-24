@@ -32,18 +32,6 @@ def resumen_donacion(request, donacion_id):
     donacion = Donacion.objects.get(id=donacion_id)
     return render(request, 'core/resumen_donacion.html', {'donacion': donacion})
 
-''''
-def donacion(request):
-    if request.method == 'POST':
-        form = DonacionForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('resumen')  # Redirige a la página de resumen o éxito
-    else:
-        form = DonacionForm()
-
-    return render(request, 'core/donacion.html', {'form': form})
-'''
 
 def migrar_usuarios():
     # Obtener todos los registros de la tabla Register
@@ -62,7 +50,7 @@ def migrar_usuarios():
             )
             user.save()
 
-
+@login_required(login_url='acceder')
 def tema_detail(request, tema_id):
     tema = get_object_or_404(Tema, id=tema_id)
     comments = tema.comments.all()
@@ -83,6 +71,7 @@ def tema_detail(request, tema_id):
         'comments': comments,
         'form': form,
     })
+
 def donacion(request):
     if request.method == 'POST':
         form = DonacionForm(request.POST)
@@ -186,9 +175,6 @@ def pago(request):
 def pago_exitoso(request):
     return render(request, 'core/pago_exitoso.html')
 
-def detallepro(request):
-    return render(request, 'core/detallepro.html')
-
 
 def foro(request):
     return render(request, 'core/foro.html')
@@ -202,7 +188,7 @@ def crear_tema(request):
     return render(request, 'core/crear_tema.html')
 
 
-@login_required
+@login_required(login_url='acceder')
 def crear_tema(request):
     if request.method == 'POST':
         form = TemaForm(request.POST)
@@ -235,12 +221,21 @@ def acceder(request):
 
     return render(request, 'core/acceder.html')
 
+def listar_productos(request):
+    productos = Producto.objects.all()
+    carrito = Carrito(request)
+    total = carrito.obtener_total()
+    return render(request, "core/listar_productos.html", {
+        'productos': productos,
+        'carrito': carrito,
+        'total': total
+    })
 
-
+'''
 def listar_productos(request):
     productos = Producto.objects.all()
     return render(request, "core/listar_productos.html", {'productos': productos})
-
+'''
 def agregar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=producto_id)
@@ -259,6 +254,11 @@ def restar_producto(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
     carrito.restar(producto)
     return redirect("listar_productos")  # Cambiar por el nombre que corresponda
+
+def mostrar_carrito(request):
+    carrito = Carrito(request)
+    total = carrito.obtener_total()
+    return render("listar_productos")
 
 def sumar_producto(request, producto_id):
     carrito = Carrito(request)  # Crear una instancia del carrito
