@@ -61,37 +61,9 @@
                             </div>                 
                         {% endfor %}
                     </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                  <h3 class="text-center">Carrito</h3>
-                  <div class="carrito-contenido">
-                    {% if request.session.carrito %}
-                      <ul class="list-group">
-                        {% for item_id, item in request.session.carrito.items %}
-                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ item.nombre }} - ${{ item.precio }} x {{ item.cantidad }}
-                            <div>
-                                <a href="{% url 'Sum' item_id %}" class="btn btn-sm btn-success">+</a>
-                                <a href="{% url 'Sub' item_id %}" class="btn btn-sm btn-warning">-</a>
-                                <a href="{% url 'Del' item_id %}" class="btn btn-sm btn-danger">Eliminar</a>
-                            </div>
-                          </li>
-                        {% endfor %}
-                      </ul>
-                      <p class="mt-2">Total: 
-                          <!--${{ request.session.carrito.total|floatformat:2 }} -->
-                          ${{ total}}
-                      </p>
-                    {% else %}
-                        <p>Tu carrito está vacío.</p>
-                    {% endif %}
-                  </div>
-                  <a href="{% url 'CLS' %}" class="btn btn-warning mt-2">Limpiar Carrito</a>
-                  <a href="" class="btn btn-success mt-2">Guardar carrito</a>
-                </div>
+                </div>  
+            
             </div>
-          </div>
 
 
 

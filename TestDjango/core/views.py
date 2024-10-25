@@ -240,25 +240,25 @@ def agregar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=producto_id)
     carrito.agregar_carrito(producto)
-    return redirect("listar_productos")  # Cambiar por el nombre que corresponda
+    return redirect('morstrar_carrito')  # Cambiar por el nombre que corresponda
 
 
 def eliminar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=producto_id)
     carrito.eliminar(producto)
-    return redirect("listar_productos")  # Cambiar por el nombre que corresponda
+    return redirect('morstrar_carrito')  # Cambiar por el nombre que corresponda
 
 def restar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=producto_id)
     carrito.restar(producto)
-    return redirect("listar_productos")  # Cambiar por el nombre que corresponda
+    return redirect('morstrar_carrito')  # Cambiar por el nombre que corresponda
 
 def mostrar_carrito(request):
     carrito = Carrito(request)
     total = carrito.obtener_total()
-    return render(request, "core/listar_productos.html", {
+    return render(request, "core/carrito.html", {
         'carrito': carrito,
         'total': total
     })

@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import home, donacion,acceder,bienvenido, resumen,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo,listar_productos,  pago, lista_solicitudes,tema_detail
+from .views import home, donacion,acceder,bienvenido,mostrar_carrito, resumen,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo,listar_productos,  pago, lista_solicitudes,tema_detail
 
 urlpatterns = [
     path('', home,name="home"),
@@ -28,6 +28,7 @@ urlpatterns = [
 
 
     #---------------MODULO DE VENTAS------------------------
+    path('carrito/', mostrar_carrito, name='morstrar_carrito'),
     path('listar_productos', listar_productos, name='listar_productos'),  # Ruta principal para listar productos
     path('agregar/<int:producto_id>/', agregar_producto, name='Add'),  # Agregar un producto al carrito
     path('eliminar/<int:producto_id>/', eliminar_producto, name='Del'),  # Eliminar un producto del carrito
