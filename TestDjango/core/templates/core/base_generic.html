@@ -28,7 +28,10 @@
         <div class="d-flex">
             {% if user.is_authenticated %}
             <a class="btn btn-custom" href="{% url 'morstrar_carrito' %}">Ir al carrito</a>
-            <a class="btn btn-custom" href="{% url 'logout' %}">Cerrar Sesión</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Cerrar sesión</button>
+            </form>
             {% else %}
             <a class="btn btn-custom" href="{% url 'acceder' %}">Iniciar Sesión</a>
             <a class="btn btn-custom" href="{% url 'register' %}">Registrarse</a>
