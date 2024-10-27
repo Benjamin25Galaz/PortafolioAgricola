@@ -30,7 +30,7 @@
             <a class="btn btn-custom" href="{% url 'morstrar_carrito' %}">Ir al carrito</a>
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
-                <button type="submit">Cerrar sesión</button>
+                <button class="btn btn-custom">Cerrar sesión</button>
             </form>
             {% else %}
             <a class="btn btn-custom" href="{% url 'acceder' %}">Iniciar Sesión</a>

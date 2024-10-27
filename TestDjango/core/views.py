@@ -267,12 +267,12 @@ def sumar_producto(request, producto_id):
     carrito = Carrito(request)  # Crear una instancia del carrito
     producto = get_object_or_404(Producto, id=producto_id)  # Obtiene el producto por ID
     carrito.sumar(producto)  # Llama al método sumar en la clase Carrito
-    return redirect("listar_productos")  # Redirige a la vista de productos
+    return redirect("morstrar_carrito")  # Redirige a la vista de productos
 
 def limpiar_carrito(request):
     carrito = Carrito(request)
     carrito.limpiar()
-    return redirect("listar_productos")  # Cambiar por el nombre que corresponda
+    return redirect("morstrar_carrito")  # Cambiar por el nombre que corresponda
 
 def formulario_producto(request):
     if request.method == 'POST':
