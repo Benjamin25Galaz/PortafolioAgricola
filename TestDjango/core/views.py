@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from transbank.webpay.webpay_plus.transaction import Transaction
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout as django_logout, authenticate
 from .forms import TemaForm, SolicitudForm, RegisterForm, DonacionForm, CommentForm, ProductoForm, PagoForm
@@ -291,3 +292,25 @@ def listar_productos(request):
 def detalle_producto(request, pk):
     producto = Producto.objects.get(pk=pk)
     return render(request, 'core/detalle_producto.html', {'producto': producto})
+
+
+def iniciar_pago(request):
+    transaction = Transaction()
+    response = transaction.create(
+        buy_order='orden123',
+        session_id='sesion123',
+        amount=10000,
+        return_url='http://127.0.0.1:8000/webpay/retorno'
+    )
+    return redirect(response['url'] + '?token_ws=' + response['token'])
+
+def retorno_pago(request):
+    token = request.GET.get('token_ws')
+    transaction = Transaction()
+    response = transaction.commit(token)
+    if response['status'] == 'AUTHORIZED':
+        # Pago exitoso
+        return render(request, 'core/pago_exitoso.html', {'response': response})
+    else:
+        # Error en el pago
+        return render(request, 'core/pago_fallido.html', {'response': response})

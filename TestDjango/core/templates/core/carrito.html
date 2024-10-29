@@ -38,6 +38,10 @@
         <a href="{% url 'CLS' %}" class="btn btn-warning mt-2">Limpiar Carrito</a>
         <a href="" class="btn btn-success mt-2">Guardar carrito</a>
       </div>
+      <form action="{% url 'iniciar_pago' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Ir a pagar</button>
+    </form>
 </body>
 </html>
 {% endblock %}
