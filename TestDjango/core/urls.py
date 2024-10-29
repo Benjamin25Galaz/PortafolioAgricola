@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import home, iniciar_pago, retorno_pago, donacion,acceder,bienvenido,mostrar_carrito, resumen,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo,listar_productos,  pago, lista_solicitudes,tema_detail
+from .views import home, iniciar_pago, pago_fallido, retorno_pago, donacion,acceder,bienvenido,mostrar_carrito, resumen,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo,listar_productos,  pago, lista_solicitudes,tema_detail
 
 urlpatterns = [
     path('', home,name="home"),
@@ -17,6 +17,7 @@ urlpatterns = [
     path('catalogo/', catalogo,name='catalogo'),
     path('pago/', pago,name='pago'),
         path('pago_exitoso/', pago_exitoso, name='pago_exitoso'),
+        path('pago_fallido/', pago_fallido, name='pago_fallido'),
     path('lista_solicitudes/', lista_solicitudes,name='lista_solicitudes'),
     path('foro/<int:tema_id>/', tema_detail, name='tema_detail'),
     path('acceder/', acceder,name='acceder'),

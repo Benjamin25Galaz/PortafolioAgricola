@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from transbank.webpay.webpay_plus.transaction import Transaction
 from django.contrib.auth.forms import AuthenticationForm
+from transbank.webpay.webpay_plus.transaction import Transaction
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from transbank.webpay.webpay_plus.transaction import Transaction
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout as django_logout, authenticate
 from .forms import TemaForm, SolicitudForm, RegisterForm, DonacionForm, CommentForm, ProductoForm, PagoForm
@@ -176,6 +177,9 @@ def pago(request):
 def pago_exitoso(request):
     return render(request, 'core/pago_exitoso.html')
 
+def pago_fallido(request):
+    return render(request, 'core/pago_exitoso.html')
+
 
 def foro(request):
     return render(request, 'core/foro.html')
@@ -232,11 +236,6 @@ def listar_productos(request):
         'total': total
     })
 
-'''
-def listar_productos(request):
-    productos = Producto.objects.all()
-    return render(request, "core/listar_productos.html", {'productos': productos})
-'''
 def agregar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=producto_id)
@@ -292,7 +291,6 @@ def listar_productos(request):
 def detalle_producto(request, pk):
     producto = Producto.objects.get(pk=pk)
     return render(request, 'core/detalle_producto.html', {'producto': producto})
-
 
 def iniciar_pago(request):
     transaction = Transaction()
