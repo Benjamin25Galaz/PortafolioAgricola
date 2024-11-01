@@ -29,6 +29,41 @@ class Donacion(models.Model):
         ('Herramientas', 'Herramientas'),
         ('Desechos', 'Desechos'),
     ]
+
+    COMUNAS = [
+        ('Alhué', 'Alhué'),
+        ('Buin', 'Buin'),
+        ('Cerrillos', 'Cerrillos'),
+        ('Cerro Navia', 'Cerro Navia'),
+        ('Colina', 'Colina'),
+        ('El Bosque', 'El Bosque'),
+        ('Estación Central', 'Estación Central'),
+        ('Huechuraba', 'Huechuraba'),
+        ('Independencia', 'Independencia'),
+        ('La Florida', 'La Florida'),
+        ('La Granja', 'La Granja'),
+        ('La Pintana', 'La Pintana'),
+        ('La Reina', 'La Reina'),
+        ('Las Condes', 'Las Condes'),
+        ('Lo Barnechea', 'Lo Barnechea'),
+        ('Lo Espejo', 'Lo Espejo'),
+        ('Maipú', 'Maipú'),
+        ('Ñuñoa', 'Ñuñoa'),
+        ('Pedro Aguirre Cerda', 'Pedro Aguirre Cerda'),
+        ('Peñalolén', 'Peñalolén'),
+        ('Providencia', 'Providencia'),
+        ('Pudahuel', 'Pudahuel'),
+        ('Quilicura', 'Quilicura'),
+        ('Quinta Normal', 'Quinta Normal'),
+        ('Recoleta', 'Recoleta'),
+        ('Renca', 'Renca'),
+        ('San Bernardo', 'San Bernardo'),
+        ('San Joaquín', 'San Joaquín'),
+        ('San Miguel', 'San Miguel'),
+        ('San Ramón', 'San Ramón'),
+        ('Santiago', 'Santiago'),
+        ('Vitacura', 'Vitacura'),
+    ]
     
     TIPOS_ARBOL = [
         ('Roble', 'Roble'),
@@ -43,9 +78,10 @@ class Donacion(models.Model):
     }
 
     opcion = models.CharField(max_length=100, choices=OPCIONES)
-    comuna = models.CharField(max_length=100, null=True)
+    comuna = models.CharField(max_length=100, choices=COMUNAS)
     tipo_arbol = models.CharField(max_length=100, choices=TIPOS_ARBOL)
     cantidad = models.IntegerField(blank=True, null=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     valor_total = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -63,10 +99,44 @@ class Donacion(models.Model):
     def __str__(self):
         return f"{self.opcion} - {self.cantidad} semillas"
 
-
 class Solicitud(models.Model):
     RETIRO_AGUAS = 'retiro_aguas_piscina'
     RETIRO_ARBOLES = 'retiro_arboles'
+
+    COMUNAS = [
+        ('Alhué', 'Alhué'),
+        ('Buin', 'Buin'),
+        ('Cerrillos', 'Cerrillos'),
+        ('Cerro Navia', 'Cerro Navia'),
+        ('Colina', 'Colina'),
+        ('El Bosque', 'El Bosque'),
+        ('Estación Central', 'Estación Central'),
+        ('Huechuraba', 'Huechuraba'),
+        ('Independencia', 'Independencia'),
+        ('La Florida', 'La Florida'),
+        ('La Granja', 'La Granja'),
+        ('La Pintana', 'La Pintana'),
+        ('La Reina', 'La Reina'),
+        ('Las Condes', 'Las Condes'),
+        ('Lo Barnechea', 'Lo Barnechea'),
+        ('Lo Espejo', 'Lo Espejo'),
+        ('Maipú', 'Maipú'),
+        ('Ñuñoa', 'Ñuñoa'),
+        ('Pedro Aguirre Cerda', 'Pedro Aguirre Cerda'),
+        ('Peñalolén', 'Peñalolén'),
+        ('Providencia', 'Providencia'),
+        ('Pudahuel', 'Pudahuel'),
+        ('Quilicura', 'Quilicura'),
+        ('Quinta Normal', 'Quinta Normal'),
+        ('Recoleta', 'Recoleta'),
+        ('Renca', 'Renca'),
+        ('San Bernardo', 'San Bernardo'),
+        ('San Joaquín', 'San Joaquín'),
+        ('San Miguel', 'San Miguel'),
+        ('San Ramón', 'San Ramón'),
+        ('Santiago', 'Santiago'),
+        ('Vitacura', 'Vitacura'),
+    ]
 
     TIPO_SOLICITUD_CHOICES = [
         (RETIRO_AGUAS, 'Retiro de aguas de piscinas'),
@@ -79,7 +149,7 @@ class Solicitud(models.Model):
     telefono = models.CharField(max_length=15)
     correo = models.EmailField()
     direccion = models.CharField(max_length=200)
-    comuna = models.CharField(max_length=100)
+    comuna = models.CharField(max_length=100, choices=COMUNAS)
     fecha_retiro = models.DateField()
     cantidad_arboles = models.IntegerField(null=True, blank=True)
     cantidad_litros = models.IntegerField(null=True, blank=True)

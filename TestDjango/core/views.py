@@ -74,21 +74,6 @@ def tema_detail(request, tema_id):
         'form': form,
     })
 
-def donacion(request):
-    if request.method == 'POST':
-        form = DonacionForm(request.POST)
-        if form.is_valid():
-            donacion_guardada = form.save()
-            return redirect('resumen_donacion', donacion_id=donacion_guardada.id)
-    else:
-        form = DonacionForm()
-    return render(request, 'core/donacion.html', {'form': form})
-
-def resumen_donacion(request, donacion_id):
-    donacion = Donacion.objects.get(id=donacion_id)
-    return render(request, 'core/resumen_donacion.html', {'donacion': donacion})
-
-
 
 def register(request):
     return render(request, 'core/register.html')

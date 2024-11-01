@@ -57,10 +57,9 @@
         
       <div class="donar-container">
         <h2>Procesar Pago</h2>
-        <form method="POST" action="{% url 'pago_exitoso' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Ir a Pagar</button>
+        <form action="{% url 'iniciar_pago' %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Ir a pagar</button>
         </form>
         <a href="{% url 'home' %}">Cancelar</a>
       </div>

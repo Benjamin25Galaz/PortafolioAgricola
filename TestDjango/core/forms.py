@@ -63,6 +63,23 @@ class SolicitudForm(forms.ModelForm):
             'cantidad_litros',
             'comentarios'
         ]
+        widgets = {
+            'tipo_solicitud': forms.Select(attrs={'class': 'form-control', 'id': 'tipo_solicitud'}),
+            'fecha_retiro': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'cantidad_arboles': forms.NumberInput(attrs={'class': 'form-control', 'id': 'cantidad_arboles', 'disabled': 'true'}),
+            'cantidad_litros': forms.NumberInput(attrs={'class': 'form-control', 'id': 'cantidad_litros', 'disabled': 'true'}),
+
+        }
+        labels = {
+            'fecha_retiro': 'Fecha de Retiro',
+        }
+
+    # Valida que la fecha sea correcta (opcional)
+    def clean_fecha_retiro(self):
+        fecha = self.cleaned_data['fecha_retiro']
+        # Aquí podrías añadir una validación de formato o rango de fechas si es necesario
+        return fecha
+
 
 
 class ProductoForm(forms.ModelForm):

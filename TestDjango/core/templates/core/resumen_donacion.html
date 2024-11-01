@@ -54,25 +54,45 @@
 
         
     
-    <div class="resumen-container">
-        
-                
-        <div class="resumen-container">
-            <h1 class="section-title text-center">Resumen de tu Donación</h1>
-            <p><strong>Opción:</strong> {{ donacion.opcion }}</p>
-            <p><strong>Comuna:</strong> {{ donacion.comuna }}</p>
-            <p><strong>Tipo de Árbol:</strong> {{ donacion.tipo_arbol }}</p>
-            <p><strong>Cantidad:</strong> {{ donacion.cantidad }}</p>
-            <p><strong>Valor Total:</strong> ${{ donacion.valor_total }}</p>
-            <a href="{% url 'donacion' %}" class="btn-custom">Realizar otra donación</a>
+    <div class="container my-5">
+        <div class="boleta border rounded shadow p-4" style="background-color: #ffffff; max-width: 600px; margin: 0 auto;">
+            <h1 class="text-center" style="font-size: 2.5rem;">Boleta de Donación</h1>
+            <hr>
+            <div class="mb-3">
+                <p><strong>Fecha de Creación:</strong> {{ donacion.fecha_creacion }}</p>
+                <p><strong>Opción:</strong> {{ donacion.opcion }}</p>
+                <p><strong>Comuna:</strong> {{ donacion.comuna }}</p>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tipo de Árbol</th>
+                        <th>Cantidad</th>
+                    
+                        <th>Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ donacion.tipo_arbol }}</td>
+                        <td>{{ donacion.cantidad }}</td>
+                        
+                        <td>${{ donacion.valor_total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+               
+                <form action="{% url 'pago' %}" method="post" class="my-3">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-custom">Ir a Pagar</button>
+                </form>
+            </div>
         </div>
-    
-        <form action="{% url 'iniciar_pago' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Ir a pagar</button>
-        </form>
-
     </div>
+    
+    
+    
     </body>
 </html>
 {% endblock %}
