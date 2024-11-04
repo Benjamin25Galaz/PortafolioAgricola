@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Solicitud, Tema, Register, Donacion
+from .models import Solicitud, Tema, Register, Donacion, Producto
 
 # Register your models here.
-
+admin.site.register(Producto)
 admin.site.register(Donacion)
 admin.site.register(Solicitud)
 admin.site.register(Tema)

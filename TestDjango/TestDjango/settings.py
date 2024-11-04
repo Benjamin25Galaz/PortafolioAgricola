@@ -62,6 +62,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'TestDjango.urls'
 
+
+AUTHENTICATION_BACKENDS = [
+    'core.authentication_backends.EmailBackend',  # Nuestro backend personalizado
+    'django.contrib.auth.backends.ModelBackend',   # Backend por defecto
+]
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

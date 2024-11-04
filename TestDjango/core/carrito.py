@@ -11,7 +11,12 @@ class Carrito:
         else:
             self.carrito = carrito
 
-
+    def obtener_cantidad(self, producto):
+        # Devuelve la cantidad actual de un producto en el carrito
+        producto_id = str(producto.id)
+        if producto_id in self.carrito:
+            return self.carrito[producto_id]['cantidad']
+        return 0
 
 
     def agregar_carrito(self, producto):
@@ -82,5 +87,7 @@ class Carrito:
         self.session["carrito"] = {}
         self.session.modified = True
 
+
+   
 
     

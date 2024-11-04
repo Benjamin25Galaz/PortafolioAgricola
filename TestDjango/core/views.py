@@ -211,6 +211,7 @@ def acceder(request):
 
     return render(request, 'core/acceder.html')
 
+
 def listar_productos(request):
     productos = Producto.objects.all()
     carrito = Carrito(request)
@@ -224,15 +225,35 @@ def listar_productos(request):
 def agregar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=producto_id)
-    carrito.agregar_carrito(producto)
-    return redirect('morstrar_carrito')  # Cambiar por el nombre que corresponda
+
+    if producto.stock > 0:
+        carrito.agregar_carrito(producto)
+        producto.stock -= 1
+        producto.save()
+        producto.verificar_y_reponer_stock()  # Llama al método para verificar el stock
+        messages.success(request, f'{producto.nombre} ha sido añadido al carrito.')
+    else:
+        messages.error(request, 'Este producto está agotado.')
+
+    return redirect('morstrar_carrito')
 
 
 def eliminar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=producto_id)
+    
+    # Obtener la cantidad de este producto en el carrito antes de eliminarlo
+    cantidad_en_carrito = carrito.obtener_cantidad(producto)
+
+    # Eliminar el producto del carrito
     carrito.eliminar(producto)
-    return redirect('morstrar_carrito')  # Cambiar por el nombre que corresponda
+
+    # Devolver el stock a la tienda
+    producto.stock += cantidad_en_carrito
+    producto.save()
+    
+    messages.success(request, f'{producto.nombre} ha sido eliminado del carrito y el stock ha sido actualizado.')
+    return redirect("morstrar_carrito")  # Cambiar por el nombre que corresponda
 
 def restar_producto(request, producto_id):
     carrito = Carrito(request)
@@ -248,11 +269,27 @@ def mostrar_carrito(request):
         'total': total
     })
 
+
 def sumar_producto(request, producto_id):
-    carrito = Carrito(request)  # Crear una instancia del carrito
-    producto = get_object_or_404(Producto, id=producto_id)  # Obtiene el producto por ID
-    carrito.sumar(producto)  # Llama al método sumar en la clase Carrito
-    return redirect("morstrar_carrito")  # Redirige a la vista de productos
+    carrito = Carrito(request)
+    producto = get_object_or_404(Producto, id=producto_id)
+
+    # Verificar y reponer stock si es necesario
+    producto.verificar_y_reponer_stock()
+
+    # Obtener la cantidad actual del producto en el carrito después de actualizar stock
+    cantidad_en_carrito = carrito.obtener_cantidad(producto)
+
+    # Verificar si la cantidad en el carrito es menor al stock
+    if cantidad_en_carrito < producto.stock:
+        carrito.sumar(producto)
+        producto.stock -= 1
+        producto.save()
+        messages.success(request, f'Se ha añadido una unidad más de {producto.nombre}.')
+    else:
+        messages.error(request, f'No se puede añadir más de {producto.stock} unidades de {producto.nombre}.')
+
+    return redirect("morstrar_carrito")
 
 def limpiar_carrito(request):
     carrito = Carrito(request)

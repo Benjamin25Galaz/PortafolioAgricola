@@ -183,6 +183,11 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
+    def verificar_y_reponer_stock(self):
+        if self.stock == 0:
+            self.stock = 5
+            self.save()
+
 class Pago(models.Model):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
