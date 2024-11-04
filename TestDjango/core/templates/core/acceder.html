@@ -19,29 +19,35 @@
 
 
 
-        <div class="container mt-4 d-flex justify-content-center align-items-center" style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 15px;">
-            <div class="col-md-6 text-center"> <!-- Ajusta el tamaño de la caja con col-md-* para centrar mejor -->
+        <div class="container d-flex justify-content-center align-items-center" style="background-color: rgba(255, 255, 255, 0.9); padding: 40px; border-radius: 10px; border: 4px solid #66CDAA; max-width: 500px; box-shadow: 0 5px 20px rgba(0, 128, 128, 0.3); margin: 120px auto;">
+            <div class="text-center" style="width: 100%;">
                 {% if error %}
                     <div class="alert alert-danger">{{ error }}</div>
                 {% endif %}
                 
-                <form method="POST">
+                <form method="POST" style="width: 100%;">
                     {% csrf_token %}
-                    <h2 class="section-title text-center">Iniciar Sesión</h2>
-                    <div class="mb-3">
-                        <label for="correo" class="form-label">Correo Electrónico</label>
-                        <input type="email" placeholder="Ingrese su correo aquí" class="form-control" name="correo_electronico" id="correo" required style="width: 50%; margin: 0 auto;">
-                    </div>
-                    <div class="mb-3">
-                        <label for="contrasena" class="form-label">Contraseña</label>
-                        <input type="password" placeholder="Ingrese su contraseña aquí" class="form-control" name="contrasena" id="contrasena" required style="width: 50%; margin: 0 auto;">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    <h2 class="section-title text-center" style="color: #66CDAA; font-weight: bold; margin-bottom: 20px;">Iniciar Sesión</h2>
                     
-                    <p class="text-center">¿No tienes una cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
+                    <div class="mb-4">
+                        <label for="correo" class="form-label" style="font-weight: bold; color: #333;">Correo Electrónico</label>
+                        <input type="email" placeholder="Ingrese su correo aquí" class="form-control text-center" name="correo_electronico" id="correo" required style="border-radius: 8px; padding: 12px; font-size: 1em;">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="contrasena" class="form-label" style="font-weight: bold; color: #333;">Contraseña</label>
+                        <input type="password" placeholder="Ingrese su contraseña aquí" class="form-control text-center" name="contrasena" id="contrasena" required style="border-radius: 8px; padding: 12px; font-size: 1em;">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100" style="background-color: #66CDAA; border-color: #66CDAA; font-weight: bold; padding: 12px; font-size: 1.1em; border-radius: 8px; transition: background-color 0.3s;">
+                        Iniciar Sesión
+                    </button>
+                    
+                    <p class="text-center mt-3">¿No tienes una cuenta? <a href="{% url 'register' %}" style="color: #66CDAA; font-weight: bold;">Regístrate aquí</a></p>
                 </form>
             </div>
         </div>
+        
         
     </body>
 

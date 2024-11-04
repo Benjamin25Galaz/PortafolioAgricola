@@ -74,8 +74,8 @@
   
 
     <form method="post">
-      <div class="container mt-4" id="formularioContainer" style="background-size: cover; background-position: center; padding: 20px;">
-          <div class="col-md-8 col-lg-6 mx-auto" style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 15px;">
+      <div class="container mt-4 mb-5" id="formularioContainer" >
+          <div class="col-md-8 col-lg-6 mx-auto" style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 15px; border: 4px solid #66CDAA;">
               <!-- Título -->
               <h2 class="text-center mb-4 section-title">Formulario de Solicitud de Servicio</h2>
               {% csrf_token %}
@@ -115,7 +115,7 @@
   
               <!-- Botón de Enviar -->
               <div class="text-center mb-3">
-                  <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+                  <button type="submit" class="btn btn-custom">Enviar</button>
                   <a href="{% url 'lista_solicitudes' %}" class="btn btn-link">Ver lista</a>
               </div>
           

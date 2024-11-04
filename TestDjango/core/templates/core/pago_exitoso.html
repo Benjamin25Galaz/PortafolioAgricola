@@ -12,33 +12,54 @@
     <style>
         .resumen-container {
             max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 150px auto;
+            padding: 30px;
             text-align: center;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f9ffef; /* Fondo suave */
+            border: 5px solid #66CDAA;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 128, 0, 0.2);
+            transition: transform 0.3s ease;
         }
+        .resumen-container:hover {
+            transform: scale(1.02); /* Efecto de agrandamiento en hover */
+        }
+
+        /* Título llamativo */
         .resumen-container h1 {
-            color: #28a745;
+            color: #66CDAA;
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
-        .btn-custom {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #fff;
-            background-color: #007bff;
-            border-radius: 5px;
+
+        /* Texto descriptivo */
+        .resumen-container p {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 25px;
         }
+
+
+
+
+
     </style>
 </head>
+
+
+
+
 <body>
     <div class="resumen-container">
         <h1>Pago Exitoso</h1>
         <p>¡Gracias por tu contribución! Tu pago ha sido procesado con éxito.</p>
-        <a href="{% url 'home' %}" class="btn-custom">Volver</a>
+        <a href="{% url 'home' %}" class="btn btn-custom">Volver</a>
     </div>
 </body>
+
+
+
+
 </html>
 {% endblock %}

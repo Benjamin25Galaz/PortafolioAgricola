@@ -32,15 +32,15 @@
                 <!-- Contenedor de los botones (lado derecho) -->
                 <div class="col-md-4 d-flex justify-content-end mt-4">
                     {% if user.is_authenticated %}
-                        <a class="btn btn-custom me-2" href="{% url 'morstrar_carrito' %}">Ir al carrito</a>
+                        <a class="btn btn-custom me-2" href="{% url 'morstrar_carrito' %}" style=" color: white; font-weight: bold; border: none; border-radius: 25px; padding: 10px 20px; font-size: 1rem; transition: background-color 0.3s ease; text-decoration: none;">Ir al carrito</a>
 
                         <form method="post" action="{% url 'logout' %}" onsubmit="return confirm('¿Estás seguro de que quieres cerrar sesión?');">
                             {% csrf_token %}
-                            <button class="btn btn-custom" type="submit">Cerrar sesión</button>
+                            <button class="btn btn-custom" type="submit" style=" color: white; font-weight: bold; border: none; border-radius: 25px; padding: 10px 20px; font-size: 1rem; transition: background-color 0.3s ease; text-decoration: none;">Cerrar sesión</button>
                         </form>
                     {% else %}
-                        <a class="btn btn-custom me-2" href="{% url 'acceder' %}">Iniciar Sesión</a>
-                        <a class="btn btn-custom" href="{% url 'register' %}">Registrarse</a>
+                        <a class="btn btn-custom me-2" href="{% url 'acceder' %}" style=" color: white; font-weight: bold; border: none; border-radius: 25px; padding: 10px 20px; font-size: 1rem; transition: background-color 0.3s ease; text-decoration: none;">Iniciar Sesión</a>
+                        <a class="btn btn-custom" href="{% url 'register' %}" style=" color: white; font-weight: bold; border: none; border-radius: 25px; padding: 10px 20px; font-size: 1rem; transition: background-color 0.3s ease; text-decoration: none;">Registrarse</a>
                     {% endif %}
                 </div>
             </div>
@@ -107,10 +107,7 @@
                 <hr class="bg-white my-4">
         
                 <p style="color: #FFD700;">&copy; 2024 ECOAGRÍCOLA. Todos los derechos reservados.</p>
-                <p>
-                    <a href="#" style="color: #66CDAA;" class="mx-2">Política de Privacidad</a>
-                    <a href="#" style="color: #66CDAA;" class="mx-2">Términos y Condiciones</a>
-                </p>
+
             </div>
         </footer>
         
