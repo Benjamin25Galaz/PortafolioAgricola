@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout as django_logout, authenticate
 from .forms import TemaForm, SolicitudForm, RegisterForm, DonacionForm, CommentForm, ProductoForm, PagoForm
-from .models import Tema, Solicitud, Register, Donacion, Producto,Pago
+from .models import Tema, Solicitud, Register, Donacion, Producto,Pago,Compra, CompraProducto
 from .carrito import Carrito
 from django.utils import timezone
 
@@ -79,6 +79,7 @@ def register(request):
     return render(request, 'core/register.html')
 
 
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -89,21 +90,26 @@ def register(request):
             correo = form.cleaned_data['correo_electronico']
             contrasena = form.cleaned_data['contrasena']
 
-            # Crear el usuario en la tabla User
-            user = User.objects.create_user(
-                username=correo,  # Utiliza el correo como nombre de usuario
-                email=correo,
-                password=contrasena,
-                first_name=nombre,
-                last_name=apellido
-            )
-            user.save()
-            
-            # Opcionalmente, puedes autenticar y loguear al usuario después de registrarse
-            from django.contrib.auth import login
-            login(request, user)
+            # Verificar si el usuario ya existe
+            if User.objects.filter(username=correo).exists():
+                # Agregar un mensaje de error al formulario
+                form.add_error('correo_electronico', 'Este usuario ya está registrado.')
+            else:
+                # Crear el usuario en la tabla User
+                user = User.objects.create_user(
+                    username=correo,  # Utiliza el correo como nombre de usuario
+                    email=correo,
+                    password=contrasena,
+                    first_name=nombre,
+                    last_name=apellido
+                )
+                user.save()
+                
+                # Autenticar y loguear al usuario después de registrarse
+                from django.contrib.auth import login
+                login(request, user)
 
-            return redirect('home')  # Redirige a la página principal después del registro
+                return redirect('home')  # Redirige a la página principal después del registro
     else:
         form = RegisterForm()
     return render(request, 'core/register.html', {'form': form})
@@ -112,11 +118,12 @@ def register(request):
 def bienvenido(request):
     return render(request, 'core/bienvenido.html')
 
-def resumen(request):
-    return render(request, 'core/resumen.html')
 
 def solicitudes(request):
     return render(request, 'core/solicitudes.html')
+
+def superurser(request):
+    return render(request, 'core/superuser.html')
     
 
 def solicitudes(request):
@@ -124,7 +131,7 @@ def solicitudes(request):
         form = SolicitudForm(request.POST)
         if form.is_valid():
             form.save()  # Guarda la solicitud en la base de datos
-            return redirect('lista_solicitudes')  # Redirige a la lista de solicitudes
+            return redirect('solicitudes')  
     else:
         form = SolicitudForm()
 
@@ -134,6 +141,14 @@ def solicitudes(request):
 def lista_solicitudes(request):
     solicitudes = Solicitud.objects.all()  # Obtenemos todas las solicitudes
     return render(request, 'core/lista_solicitudes.html', {'solicitudes': solicitudes})
+
+def lista_donaciones(request):
+    donaciones = Donacion.objects.all()  # Obtén todas las donaciones
+
+    context = {
+        'donaciones': donaciones,
+    }
+    return render(request, 'core/lista_donaciones.html', context)
 
 def logout(request):
     logout(request)
@@ -314,6 +329,7 @@ def detalle_producto(request, pk):
     producto = Producto.objects.get(pk=pk)
     return render(request, 'core/detalle_producto.html', {'producto': producto})
 
+@login_required(login_url='acceder')
 def iniciar_pago(request):
     transaction = Transaction()
     response = transaction.create(
@@ -334,3 +350,42 @@ def retorno_pago(request):
     else:
         # Error en el pago
         return render(request, 'core/pago_fallido.html', {'response': response})
+    
+@login_required(login_url='acceder')
+def finalizar_compra(request):
+    if request.user.is_authenticated:
+        carrito = Carrito(request)
+        
+        # Verificar si el carrito no está vacío
+        if not carrito.carrito:
+            return redirect('carrito')  # O una página que desees si el carrito está vacío
+
+        # Crear la compra y asociarla al usuario actual
+        compra = Compra.objects.create(usuario=request.user)
+
+        # Recorrer los productos del carrito y registrar cada uno
+        for producto_id, item in carrito.carrito.items():
+            producto = Producto.objects.get(id=producto_id)
+            cantidad = item['cantidad']
+            CompraProducto.objects.create(compra=compra, producto=producto, cantidad=cantidad)
+
+        # Limpiar el carrito después de completar la compra
+        carrito.limpiar()  # Vacía el carrito
+        return redirect('home')
+ # Redirige al historial de compras # Redirige al historial de compras después de la compra
+    
+
+@login_required(login_url='acceder')
+def historial_compras(request):
+    compras = Compra.objects.all()
+    
+    # Crear una lista para almacenar cada compra con su total
+    compras_totales = []
+    for compra in compras:
+        total_compra = sum(item.producto.precio * item.cantidad for item in compra.compraproducto_set.all())
+        compras_totales.append({
+            'compra': compra,
+            'total': total_compra,
+        })
+        
+    return render(request, 'core/historial_compras.html', {'compras_totales': compras_totales})

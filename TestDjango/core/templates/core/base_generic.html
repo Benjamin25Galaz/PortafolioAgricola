@@ -64,6 +64,9 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Inicio</a></li>
+                        {% if user.is_superuser %}
+                            <li class="nav-item"><a href="{% url 'superuser' %}" class="nav-link">Panel</a></li>
+                        {% endif %}
                         <li class="nav-item"><a href="{% url 'listar_productos' %}" class="nav-link">Tienda</a></li>
                         <li class="nav-item"><a href="#nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="{% url 'donacion' %}" class="nav-link">Donar</a></li>

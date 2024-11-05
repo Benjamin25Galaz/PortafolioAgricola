@@ -197,4 +197,15 @@ class Pago(models.Model):
 
     def __str__(self):
         return f"Pago de {self.nombre} {self.apellido} - {self.total} CLP"
+    
+
+
+class Compra(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+
+class CompraProducto(models.Model):
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
 

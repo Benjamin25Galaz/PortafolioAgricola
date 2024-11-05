@@ -1,0 +1,25 @@
+{% extends "core/base_generic.html" %}
+
+{% block content %}
+<!doctype html>
+<html lang="en"></html>
+  <body>
+    <div class="text-center mb-3">
+        <a href="{% url 'lista_solicitudes' %}" class="btn btn-link">Ver lista Solicitudes</a>
+    </div>
+    <div class="text-center mb-3">
+        <a href="{% url 'lista_donaciones' %}" class="btn btn-link">Ver lista Donaciones</a>
+    </div>
+    <div class="text-center mb-3">
+      <a href="{% url 'historial_compras' %}" class="btn btn-link">Ver lista Compras</a>
+  </div>
+
+
+    
+
+  </body>
+</html>  
+
+
+
+{% endblock %}

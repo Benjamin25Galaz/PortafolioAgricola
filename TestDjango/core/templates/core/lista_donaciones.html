@@ -1,0 +1,38 @@
+{% extends "core/base_generic.html" %}
+
+{% block content %}
+<!doctype html>
+<html lang="en"></html>
+    <body>
+        <h1>Panel de Administración - Donaciones</h1>
+
+        <!-- Tabla para mostrar las donaciones -->
+        <h2>Lista de Donaciones</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID de Donación</th>
+                    <th>Opción</th>
+                    <th>Comuna</th>
+                    <th>Tipo de Árbol</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for donacion in donaciones %}
+                <tr>
+                    <td>{{ donacion.id }}</td>
+                    <td>{{ donacion.opcion }}</td>
+                    <td>{{ donacion.comuna }}</td>
+                    <td>{{ donacion.tipo_arbol }}</td>
+                    <td>{{ donacion.cantidad }}</td>
+                    <td>${{ donacion.valor_total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'superuser' %}" class="btn btn-custom">Al Panel Admin</a>
+        
+    </body>
+</html>  
+{% endblock %}
