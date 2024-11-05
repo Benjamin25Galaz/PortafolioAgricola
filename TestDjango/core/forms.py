@@ -25,7 +25,7 @@ class DonacionForm(forms.ModelForm):
     
     class Meta:
         model = Donacion
-        fields = ['opcion', 'comuna', 'tipo_arbol', 'cantidad']
+        fields = [ 'comuna', 'tipo_arbol', 'cantidad']
 
 
 class CommentForm(forms.ModelForm):

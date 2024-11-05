@@ -22,11 +22,12 @@
         
         <!-- Formulario de búsqueda -->
         <div class="mb-4 w-100">
-            <form class="d-flex justify-content-center" action="" method="GET">
+            <form class="d-flex justify-content-center" action="{% url 'buscar_productos' %}" method="GET">
                 <input class="form-control me-2 w-50" type="search" placeholder="Buscar productos..." aria-label="Buscar" name="search" style="border-radius: 8px;">
                 <button class="btn btn-outline-primary" type="submit" style="background-color: #66CDAA; color: white; border-color: #66CDAA; font-weight: bold;">Buscar</button>
             </form>
         </div>
+        
         
         {% if user.is_superuser %}
             <a href="{% url 'formulario_producto' %}" class="btn btn-custom mb-4" style="background-color: #66CDAA; border-color: #66CDAA; color: white; font-weight: bold; border-radius: 8px;">AÑADIR PRODUCTOS</a>

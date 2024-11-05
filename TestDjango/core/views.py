@@ -389,3 +389,10 @@ def historial_compras(request):
         })
         
     return render(request, 'core/historial_compras.html', {'compras_totales': compras_totales})
+
+
+
+def buscar_productos(request):
+    query = request.GET.get('search')
+    productos = Producto.objects.filter(nombre__icontains=query) if query else None
+    return render(request, 'core/buscar_productos.html', {'productos': productos, 'query': query})

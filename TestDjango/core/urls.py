@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import home, iniciar_pago,finalizar_compra ,historial_compras ,lista_donaciones, superurser, pago_fallido, retorno_pago, donacion,acceder,bienvenido,mostrar_carrito,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema, catalogo,listar_productos, lista_solicitudes,tema_detail
+from .views import home, iniciar_pago,finalizar_compra ,catalogo,buscar_productos,historial_compras ,lista_donaciones, superurser, pago_fallido, retorno_pago, donacion,acceder,bienvenido,mostrar_carrito,pago_exitoso, resumen_donacion, logout, solicitudes, foro, register, detalle_producto,formulario_producto, sumar_producto, limpiar_carrito, agregar_producto, eliminar_producto, restar_producto,  crear_tema,listar_productos, lista_solicitudes,tema_detail
 
 urlpatterns = [
     path('', home,name="home"),
@@ -13,7 +13,8 @@ urlpatterns = [
     path('bienvenido/', bienvenido, name='bienvenido'),
     path('crear_tema/', crear_tema,name='crear_tema'),
     path('register/', register,name='register'),
-    path('catalogo/', catalogo,name='catalogo'),
+    path('catalogo/',catalogo,name='catalogo'),
+    path('buscar/', buscar_productos, name='buscar_productos'),
     path('pago/', finalizar_compra,name='pago'),
     path('pago_exitoso/', pago_exitoso, name='pago_exitoso'),
     path('pago_fallido/', pago_fallido, name='pago_fallido'),

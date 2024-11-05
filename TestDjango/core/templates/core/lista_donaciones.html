@@ -12,17 +12,16 @@
             <thead>
                 <tr>
                     <th>ID de Donación</th>
-                    <th>Opción</th>
                     <th>Comuna</th>
                     <th>Tipo de Árbol</th>
                     <th>Cantidad</th>
+                    <th>Valor Donacion</th>
                 </tr>
             </thead>
             <tbody>
                 {% for donacion in donaciones %}
                 <tr>
                     <td>{{ donacion.id }}</td>
-                    <td>{{ donacion.opcion }}</td>
                     <td>{{ donacion.comuna }}</td>
                     <td>{{ donacion.tipo_arbol }}</td>
                     <td>{{ donacion.cantidad }}</td>
