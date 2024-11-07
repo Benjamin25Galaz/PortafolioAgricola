@@ -18,43 +18,54 @@
       
       <!-- Contenedor de Catálogo de Productos -->
       <div class="container d-flex flex-column align-items-center" style="margin-bottom: 80px;">
-        <h1 class="section-title text-center my-4" style="color: #66CDAA; font-weight: bold;">Catálogo de Productos</h1>
+        <h1 class="section-title text-center my-4" style="color: #66CDAA; font-weight: bold;">🌿Catálogo de Productos🌿</h1>
         
         <!-- Formulario de búsqueda -->
         <div class="mb-4 w-100">
             <form class="d-flex justify-content-center" action="{% url 'buscar_productos' %}" method="GET">
                 <input class="form-control me-2 w-50" type="search" placeholder="Buscar productos..." aria-label="Buscar" name="search" style="border-radius: 8px;">
-                <button class="btn btn-outline-primary" type="submit" style="background-color: #66CDAA; color: white; border-color: #66CDAA; font-weight: bold;">Buscar</button>
+                <button class="btn btn-outline-primary" type="submit" style="background-color: #66CDAA; color: white; border-color: #66CDAA; font-weight: bold;">🔍 Buscar</button>
             </form>
         </div>
         
         
         {% if user.is_superuser %}
-            <a href="{% url 'formulario_producto' %}" class="btn btn-custom mb-4" style="background-color: #66CDAA; border-color: #66CDAA; color: white; font-weight: bold; border-radius: 8px;">AÑADIR PRODUCTOS</a>
+            <a href="{% url 'formulario_producto' %}" class="btn btn-custom mb-4" style="background-color: #66CDAA; border-color: #66CDAA; color: white; font-weight: bold; border-radius: 8px;">AÑADIR PRODUCTOS ➕</a>
         {% endif %}
         
-        <div class="container mt-4">
-            <div class="row">
+        <div class="container mt-4" style="margin-left: 40px;">
+            <div class="row justify-content-center">
                 {% for producto in productos %}
-                    <div class="col-12 col-sm-6 col-md-4 mb-4"> <!-- Se ajusta para que mantenga proporciones responsivas -->
-                        <div class="card border rounded" style="background-color: rgba(255, 255, 255, 0.9); border: 3px solid #66CDAA; box-shadow: 0 5px 15px rgba(0, 128, 128, 0.2); height: 100%;"> <!-- Altura de tarjeta igualada -->
+                    <div class="col-12 col-sm-6 col-md-4 mb-4">
+                        <div class="card border rounded h-100" style="background-color: rgba(255, 255, 255, 0.9); border: 3px solid #66CDAA; box-shadow: 0 5px 15px rgba(0, 128, 128, 0.2);">
                             <div class="card-body text-center">
-                                <a href="{% url 'detalle_producto' producto.pk %}" class="card-title" style="color: #66CDAA; font-weight: bold; text-decoration: none;">{{ producto.nombre }}</a>
+                                <!-- Contenedor para el nombre del producto centrado encima de la imagen -->
+                                <div class="product-name text-center mb-3">
+                                    <a href="{% url 'detalle_producto' producto.pk %}" class="card-title" style="color: #66CDAA; font-weight: bold; text-decoration: none; font-size: 30px;">
+                                        {{ producto.nombre }}
+                                    </a>
+                                </div>
+                                
+                                <!-- Imagen del producto -->
                                 <img 
                                     src="{{ producto.imagen.url }}" 
                                     alt="{{ producto.nombre }}" 
                                     class="img-fluid rounded mt-3"  
                                     style="max-height: 150px; object-fit: cover;"
                                 >
+                                
+                                <!-- Descripción y detalles del producto -->
                                 <p class="producto-descripcion mt-3" style="color: #555;">{{ producto.descripcion }}</p>
                                 <p class="producto-precio" style="color: #28a745; font-weight: bold;">Precio: ${{ producto.precio }}</p>
                                 <p class="producto-stock text-muted">Stock: {{ producto.stock }}</p>
+                                
+                                <!-- Botón de agregar al carrito -->
                                 <div class="mt-4">
                                     <a 
                                         class="btn btn-custom" 
                                         href="{% url 'Add' producto.id %}" 
                                         style="background-color: #66CDAA; color: white; font-weight: bold; border-radius: 8px; padding: 10px 20px;">
-                                        Agregar al carrito
+                                        🛒 Agregar al carrito
                                     </a>
                                 </div>
                             </div>
@@ -63,6 +74,7 @@
                 {% endfor %}
             </div>
         </div>
+        
     </div>
     
     
